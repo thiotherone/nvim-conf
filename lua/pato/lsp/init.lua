@@ -3,6 +3,6 @@ if not status_ok then
   return
 end
 
-require "pato.lsp.lsp-installer"
+require "pato.lsp.mason"
 require("pato.lsp.handlers").setup()
 require "pato.lsp.null-ls"
