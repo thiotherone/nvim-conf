@@ -1,8 +1,8 @@
-local status_ok, alpha = pcall(require, "alpha")
-if not status_ok then
-  return
-end
-
+local M = {
+  "goolord/alpha-nvim",
+  event = "VimEnter",
+  commit = "dafa11a6218c2296df044e00f88d9187222ba6b0",
+}
 local logo = {
 
                 "      ░░                                                  ░░      ",
@@ -50,6 +50,8 @@ local logo = {
                 "                                ██                                "
             }
 
+function M.config()
+local alpha = require "alpha"
 local dashboard = require "alpha.themes.dashboard"
 dashboard.section.header.val = logo
 dashboard.section.buttons.val = {
@@ -66,5 +68,8 @@ dashboard.section.footer.opts.hl = "Type"
 dashboard.section.header.opts.hl = "Include"
 dashboard.section.buttons.opts.hl = "Keyword"
 
-dashboard.opts.opts.noautocmd = true
-alpha.setup(dashboard.opts)
+ dashboard.opts.opts.noautocmd = true
+  alpha.setup(dashboard.opts)
+end
+
+return M
