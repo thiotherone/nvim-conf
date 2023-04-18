@@ -8,6 +8,9 @@ M.servers = {
   "pyright",
   "bashls",
   "jsonls",
+  "clangd",
+  "gopls",
+  "jdtls",
   "yamlls",
 }
 

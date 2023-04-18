@@ -12,13 +12,15 @@ local M = {
 }
 
 function M.config()
+--  local ft = require('Comment.ft')
+ -- ft.set({'go', 'rust','c'}, {'//%s', '/*%s*/'})
   pre_hook = function(ctx)
     -- Only calculate commentstring for tsx filetypes
     if vim.bo.filetype == "typescriptreact" then
-      local U = require "Comment.utils"
+     local U = require "Comment.utils"
 
       -- Determine whether to use linewise or blockwise commentstring
-      local type = ctx.ctype == U.ctype.linewise and "__default" or "__multiline"
+     local type = ctx.ctype == U.ctype.linewise and "__default" or "__multiline"
 
       -- Determine the location where to calculate commentstring from
       local location = nil
@@ -32,7 +34,7 @@ function M.config()
         key = type,
         location = location,
       }
-    end
+   end
   end
 end
 

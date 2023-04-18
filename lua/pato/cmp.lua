@@ -144,6 +144,7 @@ function M.config()
       end,
     },
     sources = {
+      {name = 'nvim_lsp_signature_help'},
       { name = "nvim_lsp" },
       { name = "nvim_lua" },
       { name = "luasnip" },
@@ -159,7 +160,8 @@ function M.config()
       documentation = cmp.config.window.bordered(),
     },
     experimental = {
-      ghost_text = true,
+      ghost_text  = false,
+      native_menu = false,
     },
   }
 end
