@@ -1,14 +1,9 @@
 local M = {
-  "williamboman/mason.nvim",
-  commit = "4546dec8b56bc56bc1d81e717e4a935bc7cd6477",
-  cmd = "Mason",
-  event = "BufReadPre",
+  "williamboman/mason-lspconfig.nvim",
+  commit = "e7b64c11035aa924f87385b72145e0ccf68a7e0a",
   dependencies = {
-    {
-      "williamboman/mason-lspconfig.nvim",
-      commit = "93e58e100f37ef4fb0f897deeed20599dae9d128",
-      lazy = true,
-    },
+    "williamboman/mason.nvim",
+    "nvim-lua/plenary.nvim",
   },
 }
 
@@ -26,10 +21,13 @@ local settings = {
 }
 
 function M.config()
-  require("mason").setup(settings)
+  require("mason").setup {
+    ui = {
+      border = "rounded",
+    },
+  }
   require("mason-lspconfig").setup {
-    ensure_installed = require("utils").servers,
-    automatic_installation = true,
+    ensure_installed = M.servers,
   }
 end
 
