@@ -41,3 +41,7 @@ vim.opt.whichwrap:append("<,>,[,],h,l")
 vim.opt.iskeyword:append("-")
 vim.opt.formatoptions:remove { "c", "r", "o" }  -- This is a sequence of letters which describes how automatic formatting is to be done
 vim.opt.linebreak = true
+vim.g.netrw_banner = 0
+vim.g.netrw_mouse = 2
+
+vim.cmd [[set iskeyword+=-]]
