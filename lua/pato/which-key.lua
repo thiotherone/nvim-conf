@@ -46,13 +46,16 @@ function M.config()
       },
     },
     window = {
-      border = "rounded",
-      position = "bottom",
-      padding = { 2, 2, 2, 2 },
+        border = "single", -- none, single, double, shadow
+        position = "bottom", -- bottom, top
+        margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
+        padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
+        winblend = 0,
     },
     ignore_missing = true,
-    show_help = false,
-    show_keys = false,
+    hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " },
+    show_help = true,
+    show_keys = true,
     disable = {
       buftypes = {},
       filetypes = { "TelescopePrompt" },
@@ -61,7 +64,11 @@ function M.config()
 
   local opts = {
     mode = "n", -- NORMAL mode
-    prefix = "<leader>",
+      prefix = "<leader>",
+      buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+      silent = true, -- use `silent` when creating keymaps
+      noremap = true, -- use `noremap` when creating keymaps
+      nowait = true, -- use `nowait` when creating keymaps
   }
 
   which_key.register(mappings, opts)
