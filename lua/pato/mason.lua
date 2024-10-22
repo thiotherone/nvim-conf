@@ -11,7 +11,7 @@ function M.config()
     "lua_ls",
     "cssls",
     "html",
-    "tsserver",
+    -- "tsserver",
     "pyright",
     "bashls",
     "jsonls",

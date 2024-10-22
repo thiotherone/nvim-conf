@@ -25,17 +25,17 @@ function M.common_capabilities()
   return capabilities
 end
 
-M.on_attach = function(client, bufnr) 
+M.on_attach = function(client, bufnr)
   lsp_keymaps(bufnr)
 
   if client.supports_method "textDocument/inlayHint" then
-    vim.lsp.inlay_hint.enable(true, {  bufnr })
+    vim.lsp.inlay_hint.enable(true, { bufnr })
   end
 end
 
 M.toggle_inlay_hints = function()
   local bufnr = vim.api.nvim_get_current_buf()
-  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr }), { bufnr })
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr }, { bufnr })
 end
 
 function M.config()
@@ -72,6 +72,7 @@ function M.config()
     "eslint",
     "pyright",
     "bashls",
+    "jdtls",
     "jsonls",
     "yamlls",
   }
@@ -86,7 +87,7 @@ function M.config()
         { name = "DiagnosticSignInfo", text = icons.diagnostics.Information },
       },
     },
-    virtual_text = false,
+    virtual_text = true,
     update_in_insert = false,
     underline = true,
     severity_sort = true,
@@ -123,6 +124,43 @@ function M.config()
 
     if server == "lua_ls" then
       require("neodev").setup {}
+    elseif server == "jdtls" then
+      -- Custom setup for jdtls
+      opts.root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew" }
+
+      local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+      local workspace_dir = "/home/void/.workspace/" .. project_name
+
+      opts.cmd = {
+        "java", -- or '/path/to/java17_or_newer/bin/java'
+        "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+        "-Dosgi.bundles.defaultStartLevel=4",
+        "-Declipse.product=org.eclipse.jdt.ls.core.product",
+        "-Dlog.protocol=true",
+        "-Dlog.level=ALL",
+        "-noverify",
+        "-Xms1g",
+        "--add-modules=ALL-SYSTEM",
+        "--add-opens",
+        "java.base/java.util=ALL-UNNAMED",
+        "--add-opens",
+        "java.base/java.lang=ALL-UNNAMED",
+        "-jar",
+        vim.fn.glob "/home/void/Github/jdtls/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar",
+        "-configuration",
+        "/home/void/Github/jdtls/config_linux",
+        "-data",
+        workspace_dir,
+      }
+
+      opts.settings = {
+        java = {
+          codeAction = {
+            organizeImports = true,
+          },
+          -- Add any other settings you want to customize
+        },
+      }
     end
 
     lspconfig[server].setup(opts)
