@@ -57,7 +57,7 @@ function M.config()
 
   wk.register {
     ["<leader>la"] = {
-      name = "LSP",
+      -- name = "LSP",
       a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action", mode = "v" },
     },
   }
@@ -72,7 +72,7 @@ function M.config()
     "eslint",
     "pyright",
     "bashls",
-    "jdtls",
+    -- "jdtls",
     "jsonls",
     "yamlls",
   }
@@ -88,7 +88,7 @@ function M.config()
       },
     },
     virtual_text = true,
-    update_in_insert = false,
+    update_in_insert = true,
     underline = true,
     severity_sort = true,
     float = {
@@ -124,46 +124,46 @@ function M.config()
 
     if server == "lua_ls" then
       require("neodev").setup {}
-    elseif server == "jdtls" then
-      -- Custom setup for jdtls
-      opts.root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew" }
-
-      local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
-      local workspace_dir = "/home/void/.workspace/" .. project_name
-
-      opts.cmd = {
-        "java", -- or '/path/to/java17_or_newer/bin/java'
-        "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-        "-Dosgi.bundles.defaultStartLevel=4",
-        "-Declipse.product=org.eclipse.jdt.ls.core.product",
-        "-Dlog.protocol=true",
-        "-Dlog.level=ALL",
-        "-noverify",
-        "-Xms1g",
-        "--add-modules=ALL-SYSTEM",
-        "--add-opens",
-        "java.base/java.util=ALL-UNNAMED",
-        "--add-opens",
-        "java.base/java.lang=ALL-UNNAMED",
-        "-jar",
-        vim.fn.glob "/home/void/Github/jdtls/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar",
-        "-configuration",
-        "/home/void/Github/jdtls/config_linux",
-        "-data",
-        workspace_dir,
-      }
-
-      opts.settings = {
-        java = {
-          codeAction = {
-            organizeImports = true,
-          },
-          -- Add any other settings you want to customize
-        },
-      }
+  --   elseif server == "jdtls" then
+  --     -- Custom setup for jdtls
+  --     opts.root_dir = require("jdtls.setup").find_root { ".git", "mvnw", "gradlew" }
+  --
+  --     local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":p:h:t")
+  --     local workspace_dir = "/home/void/.workspace/" .. project_name
+  --
+  --     opts.cmd = {
+  --       "java", -- or '/path/to/java17_or_newer/bin/java'
+  --       "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+  --       "-Dosgi.bundles.defaultStartLevel=4",
+  --       "-Declipse.product=org.eclipse.jdt.ls.core.product",
+  --       "-Dlog.protocol=true",
+  --       "-Dlog.level=ALL",
+  --       "-noverify",
+  --       "-Xms1g",
+  --       "--add-modules=ALL-SYSTEM",
+  --       "--add-opens",
+  --       "java.base/java.util=ALL-UNNAMED",
+  --       "--add-opens",
+  --       "java.base/java.lang=ALL-UNNAMED",
+  --       "-jar",
+  --       vim.fn.glob "/home/void/Github/jdtls/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar",
+  --       "-configuration",
+  --       "/home/void/Github/jdtls/config_linux",
+  --       "-data",
+  --       workspace_dir,
+  --     }
+  --
+  --     opts.settings = {
+  --       java = {
+  --         codeAction = {
+  --           organizeImports = true,
+  --         },
+  --         -- Add any other settings you want to customize
+  --       },
+  --     }
     end
-
-    lspconfig[server].setup(opts)
+  --
+  --   lspconfig[server].setup(opts)
   end
 end
 
